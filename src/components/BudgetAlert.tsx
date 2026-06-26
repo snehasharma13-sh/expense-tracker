@@ -1,4 +1,9 @@
-export default function BudgetAlert({ totalSpent, budget }) {
+type BudgetAlertProps = {
+  totalSpent: number;
+  budget: number;
+};
+
+export default function BudgetAlert({ totalSpent, budget }: BudgetAlertProps) {
   const percent = (totalSpent / budget) * 100;
 
   if (percent < 80) return null;

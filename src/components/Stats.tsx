@@ -3,7 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearSca
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
-const categoryColors = {
+const categoryColors: Record<string, string> = {
   Food: "#f59e0b",
   Transport: "#06b6d4",
   Shopping: "#a855f7",
@@ -13,14 +13,24 @@ const categoryColors = {
   Bills: "#fb923c",
   Other: "#6b7280",
 };
+type Expense = {
+  category: string;
+  amount: number;
+  date: string;
+};
 
-export default function Stats({ expenses, budget, totalSpent }) {
+type StatsProps = {
+  expenses: Expense[];
+  budget: number;
+  totalSpent: number;
+};
+export default function Stats({ expenses, budget, totalSpent }: StatsProps) {
   const categoryTotals = expenses.reduce((acc, e) => {
     acc[e.category] = (acc[e.category] || 0) + Number(e.amount);
     return acc;
-  }, {});
+   }, {} as Record<string, number>);
 
-  const months = {};
+  const months: Record<string, number> = {};
   expenses.forEach((e) => {
     const month = e.date.slice(0, 7);
     months[month] = (months[month] || 0) + Number(e.amount);

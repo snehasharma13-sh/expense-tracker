@@ -1,4 +1,4 @@
-const categoryColors = {
+ const categoryColors: Record<string, string> = {
   Food: "#f59e0b",
   Transport: "#06b6d4",
   Shopping: "#a855f7",
@@ -9,7 +9,7 @@ const categoryColors = {
   Other: "#6b7280",
 };
 
-const categoryEmoji = {
+const categoryEmoji: Record<string, string> = {
   Food: "🍔",
   Transport: "🚗",
   Shopping: "🛍️",
@@ -20,7 +20,20 @@ const categoryEmoji = {
   Other: "📦",
 };
 
-export default function ExpenseList({ expenses, onDelete }) {
+type Expense = {
+  id: string;
+  title: string;
+  amount: string | number;
+  category: string;
+  date: string;
+};
+
+type ExpenseListProps = {
+  expenses: Expense[];
+  onDelete: (id: string) => void;
+};
+
+export default function ExpenseList({ expenses, onDelete }: ExpenseListProps) {
   if (expenses.length === 0) {
     return (
       <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "24px", padding: "40px", textAlign: "center" }}>

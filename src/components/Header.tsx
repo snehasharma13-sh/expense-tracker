@@ -1,6 +1,11 @@
 import { useState } from "react";
-
-export default function Header({ budget, setBudget, totalSpent, remaining }) {
+type HeaderProps = {
+  budget: number;
+  setBudget: (value: number) => void;
+  totalSpent: number;
+  remaining: number;
+};
+export default function Header({ budget, setBudget, totalSpent, remaining }: HeaderProps) {
   const [editing, setEditing] = useState(false);
   const [newBudget, setNewBudget] = useState(budget);
   const percent = Math.min((totalSpent / budget) * 100, 100);
@@ -26,7 +31,7 @@ export default function Header({ budget, setBudget, totalSpent, remaining }) {
               <input
                 type="number"
                 value={newBudget}
-                onChange={(e) => setNewBudget(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewBudget(Number(e.target.value))}
                 style={{ padding: "8px 12px", borderRadius: "8px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(168,85,247,0.5)", color: "white", width: "120px", fontSize: "14px" }}
               />
               <button onClick={saveBudget} style={{ padding: "8px 16px", borderRadius: "8px", background: "#a855f7", border: "none", color: "white", cursor: "pointer", fontWeight: "600" }}>

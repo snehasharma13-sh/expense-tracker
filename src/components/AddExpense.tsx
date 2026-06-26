@@ -1,18 +1,27 @@
 import { useState } from "react";
 
 const categories = ["Food", "Transport", "Shopping", "Entertainment", "Health", "Education", "Bills", "Other"];
+type ExpenseForm = {
+  title: string;
+  amount: string;
+  category: string;
+  date: string;
+};
 
-export default function AddExpense({ onAdd }) {
+type AddExpenseProps = {
+  onAdd: (form: ExpenseForm) => void;
+};
+export default function AddExpense({ onAdd }: AddExpenseProps) {
   const [form, setForm] = useState({ title: "", amount: "", category: "Food", date: new Date().toISOString().split("T")[0] });
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!form.title || !form.amount) return;
     onAdd(form);
     setForm({ title: "", amount: "", category: "Food", date: new Date().toISOString().split("T")[0] });
   }
 
-  const inputStyle = {
+  const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "12px 16px",
     borderRadius: "12px",
@@ -58,7 +67,7 @@ export default function AddExpense({ onAdd }) {
           type="date"
           value={form.date}
           onChange={(e) => setForm({ ...form, date: e.target.value })}
-          style={inputStyle}
+          style={{ ...inputStyle }}
         />
         <button
           type="submit"
